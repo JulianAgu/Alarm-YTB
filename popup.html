@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+    <div id="toastNotification" class="toast-hidden"></div>
+
+    <div class="main-wrapper">
+        
+        <div class="header">
+            <span class="header-title">Alarm YouTube</span>
+        </div>
+
+        <div class="container">
+            <div class="controls">
+                <div class="control-group">
+                    <label class="control-label">⏱ Set Alarm (min)</label>
+                    <div class="input-row">
+                        <input type="number" id="minutes" value="60" min="1">
+                    </div>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="hourlyCheck">
+                        <span class="checkmark"></span>
+                        <span class="checkbox-text">Every hour (:00)</span>
+                    </label>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">🔊 Set Sound</label>
+                    <input type="text" id="soundSource" placeholder="Paste YouTube URL">
+                </div>
+
+                <div class="buttons-row">
+                    <button id="btnOn" class="btn-primary">
+                        <span class="btn-icon">▶</span>
+                        <span class="btn-text">ON</span>
+                    </button>
+                    <button id="btnOff" class="btn-secondary">
+                        <span class="btn-icon">⏹</span>
+                        <span class="btn-text">OFF</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="clock-panel">
+                <div class="clock-wrapper">
+                    <div id="currentTime">00:00:00</div>
+                    <div class="clock-label">Current Time</div>
+                </div>
+
+                <div class="presets">
+                    <span class="presets-title">Quick Set</span>
+                    <div class="preset-buttons">
+                        <button class="preset-btn" data-mins="30">30m</button>
+                        <button class="preset-btn" data-mins="60">1h</button>
+                    </div>
+                </div>
+            </div>
+        </div> </div> <script src="popup.js"></script>
+</body>
+
+</html>

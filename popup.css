@@ -1,0 +1,427 @@
+/* ============================================================
+   VARIABLES Y RESET
+   ============================================================ */
+:root {
+  --color-bg: #f5f5f7;
+  --color-card: #ffffff;
+  --color-text: #1d1d1f;
+  --color-text-secondary: #86868b;
+  --color-border: #d2d2d7;
+  --color-primary: #34c759;
+  --color-primary-hover: #30b350;
+  --color-secondary: #ff3b30;
+  --color-secondary-hover: #e63329;
+  --color-accent: #0071e3;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 360px;
+  background-color: #524646; /* Gris oscuro para las "esquinas" exteriores */
+  margin: 0;
+  padding: 0;
+}
+
+.main-wrapper {
+  background: var(--color-bg); /* Tu color principal (blanco/gris claro) */
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  
+  /* SOMBRA PARA EL EFECTO: 
+     1. Una sombra sutil hacia abajo para dar altura.
+     2. Una sombra interna para simular el doblez del plástico/vidrio. */
+  box-shadow: 
+    0 4px 10px rgba(0,0,0,0.1), 
+    inset 0 -1px 3px rgba(255,255,255,0.5);
+    
+  /* Un pequeño margen abajo para que se vea el fondo gris del body 
+     y se aprecie la curva */
+ 
+  overflow: hidden;
+}
+
+/* ============================================================
+   NOTIFICACIONES (TOAST)
+   ============================================================ */
+#toastNotification {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  color: white;
+  text-align: center;
+  padding: 15px 20px;
+  font-size: 1em;
+  font-weight: 600;
+  z-index: 1000;
+  transform: translateY(-100%);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(10px);
+}
+
+.toast-error {
+  background: rgba(255, 59, 48, 0.95) !important;
+}
+
+.toast-success {
+  background: rgba(52, 199, 89, 0.95) !important;
+}
+
+.toast-visible {
+  transform: translateY(0) !important;
+}
+
+/* ============================================================
+   CABECERA - CON FRANJA DIAGONAL
+   ============================================================ */
+.header {
+  background-color: #4a4a4a;
+  color: white;
+  padding: 14px 20px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.95em;
+  position: relative;
+  overflow: hidden;
+}
+
+.header-title {
+  position: relative;
+  z-index: 1;
+  letter-spacing: 0.5px;
+  transform: translateX(-10px);
+  display: inline-block;
+}
+
+/* Franja diagonal que cambia de color */
+.header::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30%;
+  height: 100%;
+  background-color: #f44336;
+  transform: skewX(-25deg) translateX(15px);
+  transition: background-color 0.3s ease;
+}
+
+/* Verde cuando está activa */
+.header.active-status::after {
+  background-color: #4CAF50;
+}
+
+/* ============================================================
+   CONTENEDOR PRINCIPAL - GRID EQUILIBRADO
+   ============================================================ */
+.container {
+  display: grid;
+  grid-template-columns: 1fr 130px;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid rgba(0,0,0,0.05); /* Un borde casi invisible para definir la forma */
+}
+
+/* ============================================================
+   COLUMNA IZQUIERDA: CONTROLES
+   ============================================================ */
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.control-group + .control-group {
+  margin-top: -2px;
+}
+
+.control-label {
+  font-size: 0.8em;
+  font-weight: 700;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Input con sufijo */
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.input-row input {
+  width: 100%;
+}
+
+/* Inputs modernos */
+input[type="number"],
+input[type="text"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-card);
+  font-size: 1em;
+  font-weight: 500;
+  color: var(--color-text);
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+input[type="number"]:focus,
+input[type="text"]:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.1);
+}
+
+input[type="number"]:disabled,
+input[type="text"]:disabled {
+  background: #f0f0f2;
+  color: var(--color-text-secondary);
+  cursor: not-allowed;
+}
+
+input[type="number"] {
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Checkbox moderno */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  margin-top: 4px;
+  padding: 4px 0;
+}
+
+.checkbox-label input[type="checkbox"] {
+  display: none;
+}
+
+.checkmark {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--color-border);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.checkmark::after {
+  content: "✓";
+  font-size: 11px;
+  font-weight: bold;
+  color: white;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.2s ease;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkmark {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkmark::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.checkbox-text {
+  font-size: 0.9em;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.checkbox-label input[type="checkbox"]:checked ~ .checkbox-text {
+  color: var(--color-text);
+}
+
+/* Botones */
+.buttons-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.btn-primary,
+.btn-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  font-size: 0.9em;
+  font-weight: 600;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: white;
+  box-shadow: 0 2px 8px rgba(52, 199, 89, 0.3);
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(52, 199, 89, 0.4);
+}
+
+.btn-secondary {
+  background: white;
+  color: var(--color-secondary);
+  border: 1.5px solid #ffe5e5;
+}
+
+.btn-secondary:hover {
+  background: #fff5f5;
+  border-color: var(--color-secondary);
+}
+
+.btn-icon {
+  font-size: 0.75em;
+}
+
+/* ============================================================
+   COLUMNA DERECHA: RELOJ Y PRESETS
+   ============================================================ */
+.clock-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  justify-content: space-between;
+}
+
+.clock-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+#currentTime {
+  width: 110px;
+  height: 110px;
+  background: linear-gradient(145deg, #ffffff, #f0f0f2);
+  border: 3px solid var(--color-border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1em;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.5px;
+  color: var(--color-text);
+  box-shadow: var(--shadow-md), inset 0 2px 4px rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+}
+
+#currentTime.active {
+  border-color: var(--color-primary);
+  background: linear-gradient(145deg, #e5f5e9, #d4edda);
+  box-shadow: 0 0 20px rgba(52, 199, 89, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.8);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 20px rgba(52, 199, 89, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.8);
+  }
+  50% {
+    transform: scale(1.03);
+    box-shadow: 0 0 30px rgba(52, 199, 89, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.8);
+  }
+}
+
+.clock-label {
+  font-size: 0.7em;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+/* Presets */
+.presets {
+  width: 100%;
+  background: var(--color-card);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.presets-title {
+  font-size: 0.65em;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.preset-buttons {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.preset-btn {
+  flex: 1;
+  padding: 8px 12px;
+  background: var(--color-bg);
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-sm);
+  font-size: 0.8em;
+  font-weight: 600;
+  color: var(--color-text);
+  transition: all 0.2s ease;
+}
+
+.preset-btn:hover {
+  background: white;
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.preset-btn:active {
+  transform: scale(0.96);
+}
